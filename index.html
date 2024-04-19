@@ -34,22 +34,23 @@
     gtag('config', 'UA-221416488-2');
   </script>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-4TZJQ68FNH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4TZJQ68FNH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-4TZJQ68FNH');
-</script>
+    gtag('config', 'G-4TZJQ68FNH');
+  </script>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Andela Rwanda - Build your team with Andela apprentices</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Work with Andela Apprentices for 3 months&#8230;" />
-  <meta property="og:image" content="https://res.cloudinary.com/bdushimi/image/upload/v1683554711/Andela_Rwanda_Engineers_zr7awr.jpg" />
+  <meta property="og:image"
+    content="https://res.cloudinary.com/bdushimi/image/upload/v1683554711/Andela_Rwanda_Engineers_zr7awr.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Andela Rwanda Apprenticeship Program" />
@@ -117,7 +118,7 @@
 
 <body>
 
-  
+
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NH5D8SX" height="0" width="0"
       style="display: none; visibility: hidden"></iframe></noscript>
@@ -198,7 +199,8 @@
               </li>
               <li>
                 <strong>Talent Retention</strong><br />
-                Option to hire the apprentice at the completion of the 12 weeks or before if you're happy with their work.
+                Option to hire the apprentice at the completion of the 12 weeks or before if you're happy with their
+                work.
               </li>
             </ol>
           </div>
@@ -624,7 +626,7 @@
   <footer class="footer-block">
     <div class="footer-wrapper-outer">
       <div class="footer-wrapper-inner">
-        
+
         <div class="footer-section-socials">
           <div class="andela-logo">
             <div class="logo-wrapper-footer">
@@ -692,10 +694,16 @@
           </div>
           <div class="trademark">
             <p>
-              © 2023
+              ©
+              <span id="currentYear"></span>
               <a href="https://andela.com/" data-type="URL" data-id="https://andela.com/" target="_blank">Andela</a>.
               All rights
               reserved
+            </p>
+          </div>
+          <div>
+            <p>
+              Visits <span id="visitCounts"></span>.
             </p>
           </div>
         </div>
@@ -714,7 +722,8 @@
               <li class="title">Find Work</li>
               <li><a href="https://andela.com/for-engineers/" target="_blank">For Technologists</a></li>
               <li><a href="https://andela.com/learning-community/" target="_blank">Learning Community</a></li>
-              <li><a href="https://andela.com/engineers/technical-leadership-program-rwanda/" target="_blank">Leadership Program</a></li>
+              <li><a href="https://andela.com/engineers/technical-leadership-program-rwanda/" target="_blank">Leadership
+                  Program</a></li>
               <li><a href="https://andela.com/category/insights/engineering/" target="_blank">Resources</a></li>
             </ul>
           </div>
@@ -750,6 +759,51 @@
     (window.dataLayer = window.dataLayer || []),
       a("js", new Date()),
       a("config", "G-CGQJDS9FYC");
+  </script>
+  <script>
+    // Get the current year
+    var currentYear = new Date().getFullYear();
+    // Display the current year in the specified element
+    document.getElementById("currentYear").innerText = currentYear;
+  </script>
+  <script>
+   async function sendPostRequest() {
+        try {
+
+            // Define the URL to send the POST request
+            const url = 'https://dhv53ievxi.execute-api.us-east-1.amazonaws.com/appsVisitCounts';
+
+            // Data to be sent in the request body
+            const data = { "app-name": "atlp-apprenticeship-lp" };
+
+            // Options for the fetch request
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            };
+
+            // Send the POST request using fetch
+            const response = await fetch(url, options);
+
+            // Check if the response is ok
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Parse the JSON response
+            const responseData = await response.json();
+
+            // Display the response
+            document.getElementById('visitCounts').innerHTML = ' : '+responseData.visitCount;
+        } catch (error) {
+            // Display an error message if the request fails
+            document.getElementById('visitCounts').innerHTML = 'Error: ' + error.message;
+        }
+    }
+    sendPostRequest()
   </script>
 </body>
 
