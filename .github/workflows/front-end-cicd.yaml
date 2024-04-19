@@ -10,8 +10,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@resume-challenge-aws
-    - uses: jakejarvis/s3-sync-action@resume-challenge-aws
+    - uses: actions/checkout@master
+    - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl private --follow-symlinks --delete
       env:
