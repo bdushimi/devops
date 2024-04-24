@@ -10,10 +10,16 @@ Globals:
   Function:
     Timeout: 3
     MemorySize: 128
-
     # You can add LoggingConfig parameters such as the Logformat, Log Group, and SystemLogLevel or ApplicationLogLevel. Learn more here https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-function-loggingconfig.
     LoggingConfig:
       LogFormat: JSON
+
+  Api:
+    Cors: 
+      AllowMethods: "'POST'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'*'"
+
 Resources:
   GetVisitCountsFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -29,6 +35,24 @@ Resources:
           Properties:
             Path: /visitcounts
             Method: post
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref AppsVisitsTable
+      Policies: 
+        - DynamoDBCrudPolicy:
+            TableName: !Ref AppsVisitsTable
+  AppsVisitsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: apps-visit-counts
+      AttributeDefinitions:
+        - AttributeName: app-name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: app-name
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST           
+            
       
 
 Outputs:

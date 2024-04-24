@@ -3,34 +3,52 @@ import boto3
 
 
 def lambda_handler(event, context):
-    body = json.loads(event['body'])
-    appName = body["app-name"]
-    visit_count: int = 0
+    print("get_visit_counts function is called")
 
-    # Create a DynamoDB Client & Connection
-    dynamodb = boto3.resource('dynamodb')
-    table_name = "apps-visit-counts"
-    table = dynamodb.Table(table_name)
+    try:
+        body = json.loads(event['body'])
+        appName = body["app-name"]
+        visit_count: int = 0
 
-    # Get the apps visit count from dynamodb
-    response = table.get_item(Key={"app-name": appName})
+        # Create a DynamoDB Client & Connection
+        dynamodb = boto3.resource('dynamodb')
+        table_name = "apps-visit-counts"
+        table = dynamodb.Table(table_name)
 
-    if "Item" in response:
-        if "count" in response["Item"]:
-            visit_count = response["Item"]["count"]
+        # Get the apps visit count from dynamodb
+        response = table.get_item(Key={"app-name": appName})
 
-    # Increment the number of visits
-    visit_count += 1
+        if "Item" in response:
+            if "count" in response["Item"]:
+                visit_count = response["Item"]["count"]
 
-    # Update the number of visits in dynamodb
-    table.put_item(Item={"app-name": appName, "count": visit_count})
+        # Increment the number of visits
+        visit_count += 1
 
-    response_data = {
-        'app-name': f"{appName}",
-        'visitCount': f"{visit_count}"
-    }
+        # Update the number of visits in dynamodb
+        table.put_item(Item={"app-name": appName, "count": visit_count})
 
-    return {
-        'statusCode': 200,
-        "body": json.dumps(response_data),
-    }
+        response_data = {
+            'app-name': f"{appName}",
+            'visitCount': f"{visit_count}"
+        }
+
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST"
+            },
+            "body": json.dumps(response_data),
+        }
+
+    except Exception as e:
+        print(str(e))
+        return {
+            "statusCode": 500,
+            "body": {
+                "event": event,
+                "exception": str(e)
+            }
+        }
