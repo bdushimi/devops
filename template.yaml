@@ -36,7 +36,7 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        - AmazonDynamoDBFullAccess:
+        - DynamoDBCrudPolicy:
             TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
   
   # MyDynamoDBAccessPolicy:
