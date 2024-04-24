@@ -36,8 +36,25 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        - DynamoDBCrudPolicy:
-            TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+        Properties:
+          PolicyName: MyDynamoDBAccessPolicy
+          PolicyDocument:
+            Statement:
+              - Action:
+                  - dynamodb:GetItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:PutItem
+                  - dynamodb:Scan
+                  - dynamodb:Query
+                  - dynamodb:UpdateItem
+                  - dynamodb:BatchWriteItem
+                  - dynamodb:BatchGetItem
+                  - dynamodb:DescribeTable
+                  - dynamodb:ConditionCheckItem
+                Resource:
+                  - arn:aws:dynamodb:us-east-1:767397845715:table/arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+                  - arn:aws:dynamodb:us-east-1:767397845715:table/arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts/index/*
+                Effect: Allow
   
   # MyDynamoDBAccessPolicy:
   #   Type: AWS::IAM::ManagedPolicy
