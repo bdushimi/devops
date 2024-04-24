@@ -35,24 +35,10 @@ Resources:
           Properties:
             Path: /visitcounts
             Method: post
-      Environment:
-        Variables:
-          TABLE_NAME: !Ref AppsVisitsTable
       Policies: 
         - DynamoDBCrudPolicy:
-            TableName: !Ref AppsVisitsTable
-  AppsVisitsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: apps-visit-counts
-      AttributeDefinitions:
-        - AttributeName: app-name
-          AttributeType: S
-      KeySchema:
-        - AttributeName: app-name
-          KeyType: HASH
-      BillingMode: PAY_PER_REQUEST           
-    DeletionPolicy: Retain        
+            TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+    
       
 
 Outputs:
