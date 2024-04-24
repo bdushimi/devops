@@ -35,21 +35,21 @@ Resources:
           Properties:
             Path: /visitcounts
             Method: post
-      Policies: 
-        - MyDynamoDBAccessPolicy:
+      Policies:
+        - AmazonDynamoDBFullAccess:
             TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
   
-  MyDynamoDBAccessPolicy:
-    Type: AWS::IAM::ManagedPolicy
-    Properties:
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Action:
-              - dynamodb:GetItem
-              - dynamodb:PutItem
-            Resource: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+  # MyDynamoDBAccessPolicy:
+  #   Type: AWS::IAM::ManagedPolicy
+  #   Properties:
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: Allow
+  #           Action:
+  #             - dynamodb:GetItem
+  #             - dynamodb:PutItem
+  #           Resource: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
       
 
 Outputs:
