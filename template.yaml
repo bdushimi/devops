@@ -36,8 +36,7 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        Properties:
-          PolicyName: MyDynamoDBAccessPolicy
+        - PolicyName: MyDynamoDBAccessPolicy
           PolicyDocument:
             Statement:
               - Action:
