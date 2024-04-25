@@ -48,8 +48,7 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        - AppsVisitsTableDBAccessPolicy:
-            TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+        - PolicyName: !Ref AppsVisitsTableDBAccessPolicy
       
 
 Outputs:
