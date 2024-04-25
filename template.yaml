@@ -21,17 +21,18 @@ Globals:
       AllowOrigin: "'*'"
 
 Resources:
-  # MyDynamoDBAccessPolicy:
-  #   Type: AWS::IAM::ManagedPolicy
-  #   Properties:
-  #     PolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: Allow
-  #           Action:
-  #             - dynamodb:GetItem
-  #             - dynamodb:PutItem
-  #           Resource: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+  AppsVisitsTableDBAccessPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: AppsVisitsTableDBAccessPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+            Resource: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
   GetVisitCountsFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -47,7 +48,7 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        - DynamoDBCrudPolicy:
+        - AppsVisitsTableDBAccessPolicy:
             TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
       
 
