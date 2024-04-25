@@ -21,6 +21,17 @@ Globals:
       AllowOrigin: "'*'"
 
 Resources:
+  # MyDynamoDBAccessPolicy:
+  #   Type: AWS::IAM::ManagedPolicy
+  #   Properties:
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Effect: Allow
+  #           Action:
+  #             - dynamodb:GetItem
+  #             - dynamodb:PutItem
+  #           Resource: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
   GetVisitCountsFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -36,36 +47,8 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        - PolicyName: AppsVisitsTableDBAccessPolicy
-          PolicyDocument:
-            Statement:
-              - Action:
-                  - dynamodb:GetItem
-                  - dynamodb:DeleteItem
-                  - dynamodb:PutItem
-                  - dynamodb:Scan
-                  - dynamodb:Query
-                  - dynamodb:UpdateItem
-                  - dynamodb:BatchWriteItem
-                  - dynamodb:BatchGetItem
-                  - dynamodb:DescribeTable
-                  - dynamodb:ConditionCheckItem
-                Resource:
-                  - arn:aws:dynamodb:us-east-1:767397845715:table/arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
-                  - arn:aws:dynamodb:us-east-1:767397845715:table/arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts/index/*
-                Effect: Allow
-  
-  # MyDynamoDBAccessPolicy:
-  #   Type: AWS::IAM::ManagedPolicy
-  #   Properties:
-  #     PolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: Allow
-  #           Action:
-  #             - dynamodb:GetItem
-  #             - dynamodb:PutItem
-  #           Resource: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
+        - DynamoDBCrudPolicy:
+            TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
       
 
 Outputs:
