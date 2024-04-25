@@ -47,10 +47,9 @@ Resources:
             Path: /visitcounts
             Method: post
       Policies:
-        - DynamoDBWritePolicy:
-            TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts
-        - DynamoDBReadPolicy:
-            TableName: arn:aws:dynamodb:us-east-1:767397845715:table/apps-visit-counts    
+        - DynamoDBCrudPolicy:
+            TableName: apps-visit-counts
+
       
 
 Outputs:
